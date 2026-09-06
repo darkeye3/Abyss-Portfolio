@@ -1,8 +1,12 @@
 # ABYSS | Game Programming Portfolio
 
-Unity와 C#으로 구현한 2D 턴제 RPG **Abyss**의 게임 프로그래밍 포트폴리오입니다.
-전투·탐험·영지·저장 시스템의 설계와 문제 해결 과정을 소개하고,
-선별한 코드와 독립 실행 테스트를 제공합니다.
+**Abyss는 Darkest Dungeon(다키스트 던전)의 전투·탐험·영지 운영 시스템을 분석하고,
+Unity와 C#으로 재구현한 학습·포트폴리오 프로젝트입니다.**
+
+원작은 Red Hook Studios의 [Darkest Dungeon](https://www.darkestdungeon.com/darkest-dungeon/)입니다.
+원작의 게임 규칙과 콘텐츠 구성을 바탕으로, C# 규칙 계층·저장 복원·Unity UI를 구현한 과정과
+문제 해결 사례를 소개합니다. 주요 코드와 독립 실행 테스트를 함께 제공합니다.
+규칙 정리에는 기존 Unity 재현 프로젝트를 분석한 역기획 문서를 참고했습니다.
 
 **[포트폴리오 PDF 보기](portfolio/Abyss_Game_Programmer_Portfolio.pdf)**
 
@@ -29,7 +33,7 @@ Unity와 C#으로 구현한 2D 턴제 RPG **Abyss**의 게임 프로그래밍 �
 - **도구:** Git, JSON, PowerShell, .NET, NUnit 및 자체 테스트 하네스
 - **AI 활용:** Codex를 코드 작성·리팩터링·테스트 작성에 활용하고 규칙 명세와 실행 결과로 검증
 
-원본 게임은 영웅 편성·보급, 던전 탐험과 전투, 귀환·성장·영지 운영을 연결합니다.
+Abyss에서는 원작의 영웅 편성·보급, 던전 탐험과 전투, 귀환·성장·영지 운영 흐름을 재구현했습니다.
 이 저장소는 채용 검토에 필요한 **코드 샘플과 설명 자료**를 공개한 별도 저장소입니다.
 
 ## 실행
@@ -43,6 +47,8 @@ dotnet run --project Abyss.Portfolio.csproj -c Release
 성공하면 테스트별 결과와 전체 통과 수가 출력됩니다. 실패한 검사는 0이 아닌 종료 코드를 반환합니다.
 
 ## 공개 코드의 구성
+
+기술 문서의 **'원본 코드'는 발췌 기준인 Abyss 전체 프로젝트 코드**를 의미합니다.
 
 - 난수 관련 세 파일은 Abyss의 구현을 발췌하고 제출용으로 주석을 정리했습니다.
 - `GraphSearch`는 원본 던전 생성기의 BFS·보스방 동률 선택 로직을 독립 인접 목록 API로 추출한 샘플입니다.
@@ -67,5 +73,5 @@ dotnet run --project Abyss.Portfolio.csproj -c Release
 ## 이용 범위
 
 채용 평가와 코드 검토를 위한 자료입니다. 열람·로컬 실행 범위 및 제품 이용 제한은
-[LICENSE.md](LICENSE.md)를 참고해 주세요. PCG 알고리즘 출처는
+[LICENSE.md](LICENSE.md)를 참고해 주세요. 원작 게임과 PCG 알고리즘 출처는
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)에 기재했습니다.

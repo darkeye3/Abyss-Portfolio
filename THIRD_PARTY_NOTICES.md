@@ -1,4 +1,18 @@
-# Algorithm and asset references
+# Original game, algorithm and asset references
+
+## Darkest Dungeon
+
+The original game is **Darkest Dungeon**, developed by **Red Hook Studios**.
+[Official game page](https://www.darkestdungeon.com/darkest-dungeon/).
+
+Abyss is a Unity/C# reimplementation project for learning and a game programming portfolio.
+Its combat, exploration and estate-management rules and content structure reference Darkest Dungeon.
+The rules were organized using reverse-engineering notes from an existing Unity reimplementation.
+The portfolio presents the implementation work on Abyss, including its C# rules architecture,
+save/restore behavior, Unity integration and tests.
+
+In the technical documents, "original source" refers to the full Abyss project from which
+the public code samples and excerpts were selected.
 
 ## PCG
 
