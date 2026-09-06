@@ -19,6 +19,7 @@ Unity와 C#으로 재구현한 학습·포트폴리오 프로젝트입니다.**
 | 시스템 설계 | [아키텍처](docs/architecture.md) | 순수 C# 규칙과 Unity 화면의 책임 분리 |
 | 전투 콘텐츠 구현 | [효과 구현](src/Combat/SkillEffects.cs) · [실행기](src/Combat/SkillEffectPipeline.cs) · [읽기 안내](docs/combat-effects.md) | 효과 기반 클래스·구체 효과·단계 실행기·통합 테스트 |
 | Unity와 게임 로직 연결 | [입력 처리](excerpts/unity/HeroDetailsCommandFlow.cs) · [설정 명령](excerpts/application/HeroConfigurationCommands.cs) | 버튼 입력 → 명령 검증 → 저장·실패 복구 → 화면 갱신 |
+| 버그 분석과 검증 | [시체 HP 표시 오류](docs/corpse-display.md) | 데이터 의미 혼동 → 조회 값 분리 → 상태별 표시·슬롯 재사용 검증 |
 | 자료구조·알고리즘 | [그래프 탐색 샘플](src/GraphSearch.cs) | BFS 최단 거리와 안정적인 동률 처리 |
 | 결정론·재현성 | [난수 스트림](src/RandomStreams.cs) | 7개 시스템의 난수 소비 격리와 상태 복원 |
 | 저장 안정성 | [저장·복원 사례](docs/save-atomicity.md) | 사전 검증과 원자적 파일 교체 |
@@ -28,8 +29,8 @@ Unity와 C#으로 재구현한 학습·포트폴리오 프로젝트입니다.**
 ## 기술과 구현 범위
 
 - **게임:** C#, Unity 6, URP, uGUI, Input System
-- **설계:** 계층 분리, 불변 조회 모델, 명령 서비스, 타입 기반 스킬 효과
-- **알고리즘:** BFS, Queue·Dictionary 기반 탐색, PCG32 기반 난수 스트림
+- **설계:** 계층 분리, 화면이 읽기만 하는 조회 데이터, 상태를 바꾸는 명령 서비스, 타입 기반 스킬 효과
+- **알고리즘:** BFS, Queue·Dictionary 기반 탐색, PCG32 기반 용도별 난수 생성기 분리
 - **도구:** Git, JSON, PowerShell, .NET, NUnit 및 자체 테스트 하네스
 - **AI 활용:** Codex를 코드 작성·리팩터링·테스트 작성에 활용하고 규칙 명세와 실행 결과로 검증
 
@@ -54,6 +55,7 @@ dotnet run --project Abyss.Portfolio.csproj -c Release
 - `GraphSearch`는 원본 던전 생성기의 BFS·보스방 동률 선택 로직을 독립 인접 목록 API로 추출한 샘플입니다.
 - 전투 효과는 원본의 핵심 효과 구현과, 실행 흐름을 확인할 수 있도록 주변 모델을 축소한 독립 샘플을 제공합니다. 원본과의 대응은 [전투 효과 문서](docs/combat-effects.md)에 정리했습니다.
 - `excerpts/`는 Unity 입력 처리, Application 명령, 저장 실패 복구와 관련 테스트의 **원본 소스 발췌**입니다. 생략한 게임·Unity 타입을 참조하므로 위 실행 프로젝트에서는 제외합니다. [읽는 순서](docs/hero-configuration.md)를 따라 계층 간 흐름을 확인할 수 있습니다.
+- 시체 HP 표시 오류의 [조회 데이터·UI·회귀 테스트](docs/corpse-display.md)도 발췌해 문제와 수정 근거를 연결했습니다.
 - 저장 파일 교체와 복원 검증은 [저장·복원 사례](docs/save-atomicity.md)에 설명했습니다.
 - 독립 테스트는 이 공개 샘플에 맞게 구성했습니다. 전체 게임의 테스트 개수와 구분됩니다.
 - 게임 전체 Core, 캠페인·콘텐츠 데이터, Unity 실행 프로젝트와 원본 개발 이력은 포함하지 않습니다.

@@ -1,6 +1,6 @@
 # 영웅 설정: UI 명령과 저장 실패 복구
 
-전투 기술 선택과 장신구 교체는 플레이 화면, 캠페인 상태, 저장 파일에 함께 반영되어야 한다. 영웅 설정 기능을 Unity 입력, Application 명령, 조회 모델로 나누고, 저장에 실패하면 메모리의 설정도 이전 상태로 되돌리도록 구현했다.
+전투 기술 선택과 장신구 교체는 플레이 화면, 캠페인 상태, 저장 파일에 함께 반영되어야 한다. 영웅 설정 기능을 Unity 입력, 게임 진행을 조정하는 Application 명령, 화면 표시용 데이터를 모은 조회 모델로 나누고, 저장에 실패하면 메모리의 설정도 이전 상태로 되돌리도록 구현했다.
 
 ![영웅 상태창](../images/hero-details.png)
 
@@ -8,7 +8,7 @@
 
 | 순서 | 공개 소스 | 확인할 구현 |
 |---|---|---|
-| 1 | [HeroDetailsView.cs](../excerpts/unity/HeroDetailsView.cs) | 버튼 콜백 연결, 사용 가능 여부 표시, 상세 상태 바인딩 |
+| 1 | [HeroDetailsView.cs](../excerpts/unity/HeroDetailsView.cs) | 버튼 콜백 연결, 사용 가능 여부 표시, 상세 상태를 화면에 반영 |
 | 2 | [HeroDetailsCommandFlow.cs](../excerpts/unity/HeroDetailsCommandFlow.cs) | 선택 순서를 유지한 기술 토글, Application 호출, 명령 후 재조회 |
 | 3 | [HeroConfigurationCommands.cs](../excerpts/application/HeroConfigurationCommands.cs) | 설정 조건 검사, 변경 전 상태 보관, 저장과 실패 복구 |
 | 4 | [HeroConfigurationQueries.cs](../excerpts/application/HeroConfigurationQueries.cs) | 실제 명령과 같은 검사로 버튼 활성화 여부와 거절 이유 제공 |
@@ -36,7 +36,7 @@ SetCombatLoadout
   → ReadHeroDetails → ApplyState
 ```
 
-장신구 교체는 기존 슬롯의 ID와 보관함 수량 스냅샷을 보관한다. 저장 실패 시 `RestoreTrinketConfiguration`이 두 상태를 복구해, 슬롯만 바뀌거나 보관함 수량만 차감된 상태가 남지 않게 한다. `TrinketStash.Counts`는 방어 복사한 읽기 전용 사전이므로 이후 장착 처리에 의해 이전 수량이 바뀌지 않는다.
+장신구 교체는 기존 슬롯의 ID와 보관함 수량을 별도 복사본(스냅샷)으로 보관한다. 저장 실패 시 `RestoreTrinketConfiguration`이 두 상태를 복구해, 슬롯만 바뀌거나 보관함 수량만 차감된 상태가 남지 않게 한다. `TrinketStash.Counts`는 원본과 분리해 복사한 읽기 전용 사전이므로 이후 장착 처리에 의해 이전 수량이 바뀌지 않는다.
 
 이 Application 경계는 메모리 변경의 실패 복구를 맡는다. 저장 파일 교체와 손상 복구는 별도의 [저장 설계](save-atomicity.md)에서 다룬다.
 
@@ -44,7 +44,7 @@ SetCombatLoadout
 
 `ApplyHeroDetailCommand`는 명령 결과를 받은 뒤 `ReadHeroDetails`로 최신 상태를 다시 읽는다. 성공과 실패 모두 이 상태를 `ApplyState(..., preserveScroll: true)`에 적용하고, 결과 메시지를 표시한다. 실패했다면 복원된 상태가 화면에 반영된다.
 
-상세창의 스크롤과 선택한 장신구 슬롯은 유지한다. 로스터는 해당 영웅의 `HeroSlotView.SetData`만 갱신한다. 초상 오브젝트를 유지하기 때문에 상세창을 닫을 때 돌아갈 입력 포커스가 사라지지 않는다.
+상세창의 스크롤과 선택한 장신구 슬롯은 유지한다. 보유 영웅 목록에서는 해당 영웅의 `HeroSlotView.SetData`만 갱신한다. 초상 오브젝트를 유지하기 때문에 상세창을 닫을 때 돌아갈 입력 포커스가 사라지지 않는다.
 
 ## 회귀 테스트에서 확인하는 조건
 
@@ -67,6 +67,6 @@ SetCombatLoadout
 | `Core/Application/EstateApplicationService.HeroDetails.cs` | `ReadCombatSkills` 91–113, `ToggleSkill` 137–145 |
 | `Core/Tests~/HeroConfigurationTests.cs` | 선택 저장 테스트 129–160, 저장 실패 테스트 162–186, `Capture` 349–353 |
 
-콜백의 실제 배선은 원본 `EstateScreen.cs` 1103줄의 `heroDetailsWindow.SetActions(ToggleHeroDetailSkill, EquipHeroDetailTrinket, UnequipHeroDetailTrinket)`에서 이뤄진다.
+버튼 입력과 처리 함수의 실제 연결은 원본 `EstateScreen.cs` 1103줄의 `heroDetailsWindow.SetActions(ToggleHeroDetailSkill, EquipHeroDetailTrinket, UnequipHeroDetailTrinket)`에서 이뤄진다.
 
 [Unity 연동과 개발 도구](unity-tooling.md) · [저장소 소개](../README.md)
