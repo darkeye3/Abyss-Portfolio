@@ -18,6 +18,7 @@ Unity와 C#으로 재구현한 학습·포트폴리오 프로젝트입니다.**
 
 | 확인할 역량 | 코드·자료 | 핵심 내용 |
 |---|---|---|
+| 플레이 흐름과 완료 범위 | [연속 플레이 캡처·저장 비교](docs/play-flow.md) | 2인 편성 → 전투 입력 → 후퇴 귀환 → 저장 후 재실행·복원 |
 | 시스템 설계 | [아키텍처](docs/architecture.md) | 순수 C# 규칙과 Unity 화면의 책임 분리 |
 | 전투 콘텐츠 구현 | [효과 구현](src/Combat/SkillEffects.cs) · [실행기](src/Combat/SkillEffectPipeline.cs) · [읽기 안내](docs/combat-effects.md) | 효과 기반 클래스·구체 효과·단계 실행기·통합 테스트 |
 | Unity와 게임 로직 연결 | [입력 처리](excerpts/unity/HeroDetailsCommandFlow.cs) · [설정 명령](excerpts/application/HeroConfigurationCommands.cs) | 버튼 입력 → 명령 검증 → 저장·실패 복구 → 화면 갱신 |
@@ -63,6 +64,9 @@ dotnet run --project Abyss.Portfolio.csproj -c Release
 - 게임 전체 Core, 캠페인·콘텐츠 데이터, Unity 실행 프로젝트와 원본 개발 이력은 포함하지 않습니다.
 
 ## 프로젝트 화면
+
+동일 캠페인의 실제 입력과 저장 재개 결과는 [플레이 흐름과 완료 범위](docs/play-flow.md)에 정리했습니다.
+후퇴 귀환 후 2주차 영지의 영웅·HP·스트레스·금화를 재실행 전후로 대조했습니다.
 
 ### 원정 지도
 
