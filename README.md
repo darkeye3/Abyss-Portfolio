@@ -3,6 +3,8 @@
 **Abyss는 Darkest Dungeon(다키스트 던전)의 전투·탐험·영지 운영 시스템을 분석하고,
 Unity와 C#으로 재구현한 학습·포트폴리오 프로젝트입니다.**
 
+**개발 기간: 2026.07.31-현재 · 개인 프로젝트(1인)**
+
 원작은 Red Hook Studios의 [Darkest Dungeon](https://www.darkestdungeon.com/darkest-dungeon/)입니다.
 원작의 게임 규칙과 콘텐츠 구성을 바탕으로, C# 규칙 계층·저장 복원·Unity UI를 구현한 과정과
 문제 해결 사례를 소개합니다. 주요 코드와 독립 실행 테스트를 함께 제공합니다.
