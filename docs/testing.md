@@ -10,7 +10,22 @@
 dotnet run --project Abyss.Portfolio.csproj -c Release
 ```
 
-공개 샘플 검증 결과: **12 tests passed, 0 failed, 4,481 assertions**.
+공개 샘플 검증 결과: **20 tests passed, 0 failed, 4,527 assertions**.
+
+## 전투 효과 통합 테스트
+
+[CombatEffectTests.cs](../tests/CombatEffectTests.cs)
+
+- 명중 판정 이후 지속 피해·시간제 상태·치료 효과가 단계와 목록 순서에 따라 적용되고, 상태 변경과 typed 이벤트가 일치하는지 확인합니다.
+- 빗나간 공격의 명중 후 효과는 건너뛰고, 대상 판정 이후 효과는 실행합니다.
+- 치료는 지정한 종류의 스택만 제거하며, 같은 치료를 반복해도 불필요한 사건을 만들지 않습니다.
+- 지속 피해 스택의 개별 수명과 소유자 턴 경과를 확인합니다.
+- 여러 대상의 처리가 끝난 뒤 스킬 종료 단계가 한 번 실행되는지 검사합니다.
+- 결정적인 효과가 기본 판정의 난수 상태에 영향을 주지 않는지 비교합니다.
+- 잘못된 대상 목록과 효과 정의를 거절합니다.
+
+이 테스트는 원본에서 선별한 세 효과와 상태 컨테이너를 축소된 전투 모델에 연결해 실행합니다.
+원본 구현과 샘플용 모델의 구분은 [전투 효과 문서](combat-effects.md)를 참고해 주세요.
 
 ## 난수 테스트
 
@@ -32,6 +47,10 @@ dotnet run --project Abyss.Portfolio.csproj -c Release
 - 최장 거리가 같은 방은 입력 순서와 관계없이 Ordinal ID 순서로 선택합니다.
 
 ## 원본 프로젝트의 검증과 관계
+
+[HeroConfigurationTests.cs](../excerpts/application/HeroConfigurationTests.cs)에는 실제 영웅 설정·저장 실패 회귀 테스트를 발췌했습니다.
+선택 목록의 저장 왕복, 잘못된 선택 거절, 저장 오류 후 장신구 슬롯·보관함·선택 상태 복원을 확인하는 코드입니다.
+원본 게임의 세션과 콘텐츠를 사용하는 발췌이므로 위 독립 실행 결과에 포함하지 않습니다.
 
 이 저장소의 테스트 수치는 위 독립 샘플만의 결과입니다. PDF에 소개한 83,449개 Core
 assertion은 Abyss 원본 프로젝트의 규칙·콘텐츠·저장·Application 전체 검증 결과입니다.

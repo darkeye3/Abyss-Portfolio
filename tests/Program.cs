@@ -10,6 +10,7 @@ namespace Abyss.Portfolio.Tests
             TestRunner runner = new TestRunner();
             RandomnessTests.Register(runner);
             GraphSearchTests.Register(runner);
+            CombatEffectTests.Register(runner);
             return runner.Finish();
         }
     }
